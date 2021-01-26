@@ -26,6 +26,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
 /* navbar*/
 nav{
     background-color: gray
@@ -39,38 +41,75 @@ nav{
     margin-left: 20px;
     margin-right: 20px;
 }
+
+
 /* left column*/
 #activity-list{
     background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
 }
 .activity-title{
     background-color: rgb(180, 179, 179);
-    padding: 10px
+    padding: 10px;
+    border-radius: 5px;
 }
 
 ul{
     list-style-type: none;
 }
-li{
+
+.activity-item{
+    font-size: 15px;
     padding: 5px;
-}
-#activity-item{
-    font-size: 30px;
 }
 .activity-item:hover {
     color: green
 }
 
+/* + */
+
+.chosen {
+    color: green;
+}
+
+
+
 /*center column*/
 #today-activity{
     width: 600px;
 }
-#today-log{
+#today-page{
     background-color: rgba(255, 255, 255, 0.5);
     height: 700px;
     margin-top: 30px;
     border-radius: 15px;
 }
+#today-log{
+    height: 670px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#day-activities{
+    padding-left: 0px;
+}
+#today-score{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around ;
+
+}
+
+
+/* + */
+.score{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
 
 /*right column*/
 #log-panel{
@@ -86,16 +125,12 @@ li{
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     width: 400px;
-    height: 350px;
+    height: 380px;
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 
-/**/
 
-.chosen {
-    color: green;
-}
 
