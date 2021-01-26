@@ -53,6 +53,7 @@ let toDoListMenu = document.getElementById("random-tasks")
 let scoreContainer = document.getElementById("score-container")
 let todayScore =document.getElementById("today-score")
 let activitySubmitButton = document.getElementById("activity-submit")
+let body = document.querySelector("body")
 
 
 // console.log(toDoListMenu)
@@ -86,7 +87,7 @@ const createRandomList = function (){
         console.log(toDoList)
         for (let j=0; j<toDoList.length; j++){
             let listItem = document.createElement("li")
-            listItem.innerText=toDoList[j]
+            listItem.innerText=`☐ ${toDoList[j]}`
             toDoListMenu.appendChild(listItem)
         }
         
@@ -116,6 +117,30 @@ const addToUserActivity = function(){
         })
     }
 }
+
+/////////////////////////////////////////////////////
+// let activityNeeded =[]
+// const neededActivity = function (acttodolist){
+    
+//     for (let n of tasks){
+//         if (acttodolist === item.taskName){
+//             activityNeeded.push(item.taskComplete)
+//         }
+//     }
+// }
+
+// const taskComplete = function (actmyactivity){
+//     for (let n of activityNeeded){
+//         if (actmyactivity !== undefined){
+
+//         }
+//     }
+// }
+
+
+
+///////////////////////////////////////////////
+
 console.log (todayScore)
 activitySubmitButton.addEventListener("click", function(){
     let score = parseInt(myScore[0])
@@ -125,10 +150,21 @@ activitySubmitButton.addEventListener("click", function(){
         console.log(score)
     }
     scorenumber.innertext = score
-    todayScore.append(score)
-    
+    todayScore.append(score)    
 })
 
+const changeToNoon = function(){
+    body.classList.remove("day")
+    body.classList.add("noon")
+}
+const changeToSunset = function(){
+    body.classList.remove("noon")
+    body.classList.add("sunset")
+}
+const changeToNight = function(){
+    body.classList.remove("sunset")
+    body.classList.add("night")
+}
 
 
 
@@ -136,6 +172,29 @@ activitySubmitButton.addEventListener("click", function(){
 createRandomList()
 addToUserActivity()
 
+const game = {
+    time: 24,
+    start(){
+        const gameTimer = setInterval(() => {
+            
+            this.time= this.time -1
+            if ( this.time == 0){
+                clearInterval (gameTimer)
+                this.end()
+            } else if (this.time === 18){
+                changeToNoon()
+            } else if (this.time === 12){
+                changeToSunset()
+            } else if (this.time === 6){
+                changeToNight ()
+            }
+        }, 1000)
+    },
+    end() {
+        console.log ("gameover!!")
+    }
+}
+game.start()
 
     
 

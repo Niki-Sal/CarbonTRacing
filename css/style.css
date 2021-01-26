@@ -12,15 +12,22 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.noon{
+    background-image: url("../img/noon.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .sunset{
-    background-image: url("");
+    background-image: url("../img/sunset.jpg");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 .night{
-    background-image: url("");
+    background-image: url("../img/night.jpg");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
