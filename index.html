@@ -3,9 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Saving Our Planet</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css
+
+
+
+    ">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <script defer src="./js/app.js"></script>
 </head>
-<body>
+<body class="day">
+    <header>
+        <nav>
+            <h3>Saving Our 🌎</h3>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="column" id="activity-list">
+            <div class="activity-category">
+                <h5 class="activity-title">COMMUTE</h5>
+                <ul>
+                    <li class="activity-item"><i class="fas fa-walking"></i>Walking</li>
+                    <li class="activity-item"><i class="fas fa-car"></i>Car</li>
+                    <li class="activity-item"><i class="fas fa-bicycle"></i> Bicycle</li>
+                    <li class="activity-item"><i class="fas fa-bus"></i> Public Transportation</li>
+                    <li class="activity-item"><i class="fas fa-plane-departure"></i>Airplane</li>
+                    <li class="activity-item"><i class="fas fa-train"></i> Train</li>    
+                </ul>
+            </div>
+            <div class="activity-category">
+                <h5 class="activity-title">ENERGY CONSUMPTION</h5>
+                <ul>
+                    <li class="activity-item"><i class="far fa-lightbulb"></i>Light Bulb</li>
+                    <li class="activity-item"><i class="fas fa-tv"></i> TV</li>
+                    <li class="activity-item"><i class="far fa-caret-square-down"></i> Washing Machine</li>
+                    <li class="activity-item"><i class="fas fa-caret-square-down"></i> Dryer</li>
+                    <li class="activity-item"><i class="fas fa-cube"></i> Refrigerator</li>
+                    <li class="activity-item"><i class="fas fa-box"></i> Stove</li>    
+                </ul>
+            </div>
+            <div class="activity-category">
+                <h5 class="activity-title">SUPPLIES</h5>
+                <ul>
+                    <li class="activity-item"><i class="fas fa-fish"></i> Animal Based Products</li>
+                    <li class="activity-item"><i class="fas fa-seedling"></i>Plant Based Products</li>
+                    <li class="activity-item"><i class="fas fa-coffee"></i>Coffee</li>
+                    <li class="activity-item"><i class="far fa-newspaper"></i> Newspaper</li> 
+                </ul>
+            </div>
+            <div class="activity-category">
+                <h5 class="activity-title">ENERGY POSITIVE</h5>
+                <ul>
+                    <li class="activity-item"><i class="fas fa-recycle"></i> Recycling paper</li>
+                    <li class="activity-item"><i class="fas fa-recycle"></i> Compost extra food</li>
+                    <li class="activity-item"><i class="fas fa-tachometer-alt"></i> Speed down car</li>
+                    <li class="activity-item"><i class="fas fa-wind"></i>Air drying cloth</li>
+                    <li class="activity-item"><i class="fas fa-plug"></i>Unplug unused electrical devices</li>
+                    <li class="activity-item"><i class="fas fa-box-open"></i> Use products with little packaging</li>    
+                </ul>
+            </div>
+        </div>
+        <div class= "column" id="today-activity">
+            <div id="today-log">
+                <h4>user's Activities</h4>
+                <ul id= "day-activities">
+                   
+                </ul>
+            </div>
+            <div id="today-score">
+                <h4>Today's Total Score: xxx</h4>
+            </div>
+        </div>
+        <div class= "column" id="log-panel">
+            <div class="log-subpanel" id="totalscore">
+                <h4>Hi user!</h4>
+                <p>Your Total Score is: xxxx</p>
+            </div>
+            <div class="log-subpanel" id="timer">
+                <div id= "timer">Timer</div>
+            </div>
+            <div class="log-subpanel" id="to-do-list">
+                <h4 id="list">To-Do List</h4>
+                <ul id= "random-tasks">
+
+                </ul>
+                <button id="level">Next></button>
+            </div>
+        </div>
+    </div>
     
+   
+
 </body>
 </html>

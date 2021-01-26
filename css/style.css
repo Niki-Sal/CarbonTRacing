@@ -1,0 +1,101 @@
+*{
+    box-sizing: border-box;
+    margin: 0px;
+}
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+.day{
+    background-image: url("../img/day.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.sunset{
+    background-image: url("");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.night{
+    background-image: url("");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* navbar*/
+nav{
+    background-color: gray
+}
+
+/* container*/
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+/* left column*/
+#activity-list{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.activity-title{
+    background-color: rgb(180, 179, 179);
+    padding: 10px
+}
+
+ul{
+    list-style-type: none;
+}
+li{
+    padding: 5px;
+}
+#activity-item{
+    font-size: 30px;
+}
+.activity-item:hover {
+    color: green
+}
+
+/*center column*/
+#today-activity{
+    width: 600px;
+}
+#today-log{
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 700px;
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+/*right column*/
+#log-panel{
+    padding-right: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#timer{
+    text-align: center;
+}
+#to-do-list{
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    width: 400px;
+    height: 350px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+/**/
+
+.chosen {
+    color: green;
+}
+
