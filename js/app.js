@@ -1,15 +1,60 @@
 ////////global variables
-
+//defining an array of objects for each task. including task name and an object of activities 
+//that cause that task to be done.
 let tasks = [
-    {taskName: "going to work", taskComplete: ["walking","car","bicyle","public transportation"]},
-    {taskName: "trip to lA", taskComplete:["airplain","bus"]},
-    {taskName: "Reading news", taskComplete:["lightbulb","newspaper"]},
-    {taskName: "Watching TV", taskComplete: ["tv"]},
-    {taskName: "doing Laundry", taskComplete:["washerwashing machine","dryer","air drying cloth"]},
-    {taskName: "cooking", taskComplete: ["refrigerator","stove","animal based products","plant based products"]},
-    {taskName: "coffee with a friend", taskComplete: ["walking","car","bicycle","coffee"]}
+    {taskName: "going to work", 
+    taskComplete: {
+        "walking": "going to work",
+        "car": "going to work",
+        "bicyle":"going to work",
+        "public transportation": "going to work"}
+    },
+    {taskName: "trip to lA", 
+    taskComplete:{
+        "airplane": "trip to lA",
+        "bus": "trip to lA"}
+    },
+    {taskName: "Reading news", 
+    taskComplete:{
+        "light bulb,newspaper": "Reading news",
+        "newspaper,light bulb": "Reading news"}
+        // "newspaper": "Reading news"
+    },
+    {taskName: "Watching TV", 
+    taskComplete: {
+        "tv":"Watching TV"}
+    },
+    {taskName: "doing Laundry", 
+    taskComplete:{
+        "washing machine,dryer": "doing Laundry",
+        "dryer,washing machine": "doing Laundry",
+        "washing machine,air drying cloth": "doing Laundry",
+        "air drying cloth,washing machine": "doing Laundry"}
+        // "dryer": "doing Laundry",
+        // "air drying cloth": "doing Laundry"}
+    },
+    {taskName: "cooking", 
+    taskComplete: {
+        "refrigerator,stove,animal based products": "cooking",
+        "refrigerator,stove,plant based products": "cooking"}
+        // "stove": "cooking",
+        // "animal based products": "cooking",
+        // "plant based products": "cooking"}
+    },
+    {taskName: "coffee with a friend", 
+    taskComplete: {
+        "coffee,walking": "coffee with a friend",
+        "walking,coffee": "coffee with a friend",
+        "coffee,bicycle": "coffee with a friend",
+        "bicycle,coffee": "coffee with a friend",
+        "coffee,car": "coffee with a friend",
+        "car,coffee": "coffee with a friend"}
+        // "walking": "coffee with a friend",
+        // "car": "coffee with a friend",
+        // "bicycle": "coffee with a friend",}
+    },
 ]
-
+//defining all activities scores
 let activities = [
     {name: "walking", score: 50},
     {name: "car", score: -100},
@@ -37,29 +82,26 @@ let activities = [
 ]
 
 let todayActivity = []
-
 let commute = ["walking","car","bicycle","public Transportation","airplain","train"]
 let energyConsumption = ["light Bulb", "TV", "washer", "dryer", "refrigerator","stove"]
 let supplies = ["animal based products", "plant based products", "coffee", "newspaper"]
 let energyPositive = ["recycling paper", "compost food", "speed down car","air drying cloth", "unplug unused electrical devices","use product with little package"]
-
 let toDoList=[]
-
-let level = 2
+let level = 1
 let myActivity=[]
 let myScore =[]
+let activityNeeded =[]
+let acts;
+
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
 let scoreContainer = document.getElementById("score-container")
 let todayScore =document.getElementById("today-score")
 let activitySubmitButton = document.getElementById("activity-submit")
 let body = document.querySelector("body")
-
-
-// console.log(toDoListMenu)
 let activityItem = document.getElementsByClassName("activity-item")
 let todayList = document.getElementById ("day-activities")
-
+let item = document.createElement("li")
 
 ///////create functions & eventlisteners
 const createRandomList = function (){
@@ -85,11 +127,23 @@ const createRandomList = function (){
             toDoList.push(tasks[n].taskName)
         }
         console.log(toDoList)
+        
         for (let j=0; j<toDoList.length; j++){
-            let listItem = document.createElement("li")
-            listItem.innerText=`☐ ${toDoList[j]}`
-            toDoListMenu.appendChild(listItem)
+            
+            item.innerText=`☐ ${toDoList[j]}`
+            item.classList.add("undone")
+            toDoListMenu.appendChild(item)
         }
+        for (let i=0; i<toDoList.length; i++){
+            for (let n=0; n<tasks.length; n++){
+                if (tasks[n].taskName === toDoList[i]){
+                    acts = tasks[n].taskComplete
+                }   
+            }                    
+        }
+        console.log(acts)
+        addToUserActivity()
+         
         
 }
 
@@ -109,39 +163,35 @@ const addToUserActivity = function(){
                     
                     myScore.push(activities[j].score)
                     myActivity.push(activities[j].name)
-                    console.log(myScore)
-                    console.log(myActivity)
 
                 }
             }
+            console.log(myActivity)
+            console.log(myScore)
+            console.log(acts)
+            let myActivityStr = myActivity.toString()
+                if(acts[myActivityStr]!== undefined){
+                    console.log("Hurrayyyyyyyy") 
+                    // alert("you are done for today!")
+                    item.classList.remove("undone")
+                    item.classList.add("done") 
+                }else{
+                    console.log(":(")
+                }  
+            
         })
     }
 }
 
 /////////////////////////////////////////////////////
-// let activityNeeded =[]
-// const neededActivity = function (acttodolist){
-    
-//     for (let n of tasks){
-//         if (acttodolist === item.taskName){
-//             activityNeeded.push(item.taskComplete)
-//         }
-//     }
-// }
 
-// const taskComplete = function (actmyactivity){
-//     for (let n of activityNeeded){
-//         if (actmyactivity !== undefined){
 
-//         }
-//     }
-// }
 
 
 
 ///////////////////////////////////////////////
 
-console.log (todayScore)
+
 activitySubmitButton.addEventListener("click", function(){
     let score = parseInt(myScore[0])
     let scorenumber = document.createElement("p")
@@ -152,6 +202,7 @@ activitySubmitButton.addEventListener("click", function(){
     scorenumber.innertext = score
     todayScore.append(score)    
 })
+
 
 const changeToNoon = function(){
     body.classList.remove("day")
@@ -170,7 +221,8 @@ const changeToNight = function(){
 
 //////game logic
 createRandomList()
-addToUserActivity()
+
+// checkmark()
 
 const game = {
     time: 24,
@@ -191,7 +243,7 @@ const game = {
         }, 1000)
     },
     end() {
-        console.log ("gameover!!")
+        alert ("gameover!!")
     }
 }
 game.start()
