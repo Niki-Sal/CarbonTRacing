@@ -6,7 +6,7 @@ let tasks = [
     taskComplete: {
         "walking": "going to work",
         "car": "going to work",
-        "bicyle":"going to work",
+        "bicycle":"going to work",
         "public transportation": "going to work"}
     },
     {taskName: "trip to lA", 
@@ -87,7 +87,8 @@ let energyConsumption = ["light Bulb", "TV", "washer", "dryer", "refrigerator","
 let supplies = ["animal based products", "plant based products", "coffee", "newspaper"]
 let energyPositive = ["recycling paper", "compost food", "speed down car","air drying cloth", "unplug unused electrical devices","use product with little package"]
 let toDoList=[]
-let level = 3
+// let level = 3
+let level = parseInt(prompt("please enter level"))
 let myActivity=[]
 let myScore =[]
 let activityNeeded =[]
@@ -303,8 +304,9 @@ const game = {
         }, 1000)
     },
     end() {
-        // alert ("gameover!!")
+        alert ("gameover!!")
         console.log("gameover")
+
     }
 }
 game.start()
