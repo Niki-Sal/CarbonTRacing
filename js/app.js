@@ -87,11 +87,12 @@ let energyConsumption = ["light Bulb", "TV", "washer", "dryer", "refrigerator","
 let supplies = ["animal based products", "plant based products", "coffee", "newspaper"]
 let energyPositive = ["recycling paper", "compost food", "speed down car","air drying cloth", "unplug unused electrical devices","use product with little package"]
 let toDoList=[]
-let level = 1
+let level = 3
 let myActivity=[]
 let myScore =[]
 let activityNeeded =[]
-let acts;
+let acts={}
+let acti={}
 
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
@@ -101,7 +102,19 @@ let activitySubmitButton = document.getElementById("activity-submit")
 let body = document.querySelector("body")
 let activityItem = document.getElementsByClassName("activity-item")
 let todayList = document.getElementById ("day-activities")
-let item = document.createElement("li")
+let check1 = document. getElementById ("check1")
+let check2 = document. getElementById ("check2")
+let check3 = document. getElementById ("check3")
+
+let item1 = document.createElement("li")
+let item2 = document.createElement("li")
+let item3 = document.createElement("li")
+
+let items = []
+items.push (item1)
+items.push (item2)
+items.push (item3)
+console.log (items)
 
 ///////create functions & eventlisteners
 const createRandomList = function (){
@@ -109,12 +122,12 @@ const createRandomList = function (){
         if (level === 1){
             let Num = Math.floor(Math.random()* (tasks.length))
             randNum.push(Num)
-        } else if (level ===2){
+        } else if (level === 2){
             let Num = Math.floor(Math.random()* (tasks.length))
             randNum.push(Num)
             Num = Math.floor(Math.random()* (tasks.length))
             randNum.push(Num)
-        } else if (level ===3){
+        } else if (level === 3){
             let Num = Math.floor(Math.random()* (tasks.length))
             randNum.push(Num)
             Num = Math.floor(Math.random()* (tasks.length))
@@ -127,17 +140,18 @@ const createRandomList = function (){
             toDoList.push(tasks[n].taskName)
         }
         console.log(toDoList)
-        
-        for (let j=0; j<toDoList.length; j++){
-            
-            item.innerText=`☐ ${toDoList[j]}`
-            item.classList.add("undone")
-            toDoListMenu.appendChild(item)
+        for (let i=0; i<toDoList.length; i++ ){
+            items[i].innerText=`${toDoList[i]}`
+            items[i].classList.add("undone")
+            toDoListMenu.appendChild(items[i])
         }
+        
+        
         for (let i=0; i<toDoList.length; i++){
             for (let n=0; n<tasks.length; n++){
                 if (tasks[n].taskName === toDoList[i]){
-                    acts = tasks[n].taskComplete
+                    acts[i] = tasks[n].taskComplete
+                    // Object.assign(acti, acts[0],acts[1],acts[2])
                 }   
             }                    
         }
@@ -166,18 +180,64 @@ const addToUserActivity = function(){
 
                 }
             }
-            console.log(myActivity)
+            // console.log(myActivity)
             console.log(myScore)
             console.log(acts)
-            let myActivityStr = myActivity.toString()
-                if(acts[myActivityStr]!== undefined){
+            check1.addEventListener ("click", function(){
+                let myActivityStr = myActivity.toString()
+                let current = acts[0]
+                console.log (current)
+                if(current[myActivityStr] !== undefined){
+                    
                     console.log("Hurrayyyyyyyy") 
                     // alert("you are done for today!")
-                    item.classList.remove("undone")
-                    item.classList.add("done") 
+                    items[0].classList.remove("undone")
+                    items[0].classList.add("done") 
+                    
                 }else{
+                    console.log(myActivityStr)
                     console.log(":(")
-                }  
+                } 
+                myActivity =[]
+
+            })
+            check2.addEventListener ("click", function(){
+                let myActivityStr = myActivity.toString()
+                let current = acts[1]
+                console.log (current)
+                if(current[myActivityStr] !== undefined){
+                    
+                    console.log("Hurrayyyyyyyy") 
+                    // alert("you are done for today!")
+                    items[1].classList.remove("undone")
+                    items[1].classList.add("done") 
+                    
+                }else{
+                    console.log(myActivityStr)
+                    console.log(":(")
+                }
+                myActivity =[] 
+
+            })
+            check3.addEventListener ("click", function(){
+                let myActivityStr = myActivity.toString()
+                let current = acts[2]
+                console.log (current)
+                if(current[myActivityStr] !== undefined){
+                    
+                    console.log("Hurrayyyyyyyy") 
+                    // alert("you are done for today!")
+                    items[2].classList.remove("undone")
+                    items[2].classList.add("done") 
+                    
+                }else{
+                    console.log(myActivityStr)
+                    console.log(":(")
+                } 
+                
+
+            })
+            
             
         })
     }
@@ -243,7 +303,8 @@ const game = {
         }, 1000)
     },
     end() {
-        alert ("gameover!!")
+        // alert ("gameover!!")
+        console.log("gameover")
     }
 }
 game.start()
