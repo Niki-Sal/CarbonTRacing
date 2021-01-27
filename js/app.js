@@ -79,7 +79,7 @@ let myActivity=[]
 let myScore =[]
 let activityNeeded =[]
 let acts={}
-
+let totalScore = 1000
 
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
@@ -89,10 +89,47 @@ let activitySubmitButton = document.getElementById("activity-submit")
 let body = document.querySelector("body")
 let activityItem = document.getElementsByClassName("activity-item")
 let todayList = document.getElementById ("day-activities")
-
+let scoreNumber = document.createElement("p")
+let totalScoreDisplay = document.getElementById("total-score")
+let userDisplay = document.getElementById("user")
+let nextButton = document.getElementById("next")
+let footPrintSection = document.getElementById ("foot-print")
 
 let item;
 let item1 = document.createElement("li")
+
+
+const game = {
+    time: 24,
+    start(){
+        console.log(this.time)
+        const gameTimer = setInterval(() => {
+
+            if ( this.time == 0){
+                clearInterval (gameTimer)
+                this.end()
+            } else if (this.time === 18){
+                changeToNoon()
+            } else if (this.time === 12){
+                changeToSunset()
+            } else if (this.time === 6){
+                changeToNight ()
+            } else if (this.time === 24){
+                changeToDay()
+            }
+            this.time= this.time -1
+        }, 1000)
+
+    },
+    end() {
+        // alert ("gameover!!")
+        console.log("gameover")
+        //put a note somewhere
+        //make next task unclickable
+        restartDay()
+
+    }
+}
 
 ///////create functions & eventlisteners
 const createRandomList = function (){ 
@@ -153,15 +190,64 @@ const clicki = function (e){
 
 activitySubmitButton.addEventListener("click", function(){
     let score = parseInt(myScore[0])
-    let scorenumber = document.createElement("p")
+    
     for (let n=1; n<myScore.length; n++){
         score= score + myScore[n]
         console.log(score)
     }
-    scorenumber.innertext = score
-    todayScore.append(score)
-    createRandomList()    
+    scoreNumber.innerText = score
+    todayScore.append(scoreNumber)
+    createRandomList() 
+     
 })
+// refresh the whole game (new day) +showing the previous day score and footprint
+
+const restartDay =function (){
+    nextButton.addEventListener("click",function(){
+        
+        //add scoreNumber to total score
+        let totalScore= parseInt(totalScoreDisplay.innerText.slice(21))
+        let scoreNumberInt = parseInt(scoreNumber.innerText)
+        console.log (scoreNumberInt)
+        //total score in real interger
+        totalScore = totalScore + scoreNumberInt
+        console.log (totalScore)
+        //trying to implement the interger in string shown up in page
+        let totalSoreArray = totalScoreDisplay.innerText.split (" ")
+        totalSoreArray[4]= totalScore.toString()
+        console.log(totalSoreArray)
+        let finalScore= totalSoreArray.join(" ")
+        console.log(finalScore)
+        totalScoreDisplay.innerText= finalScore
+        // get the footprint to show up based on logic: each 100 less than 1000 cause showing one footprint
+        let measurement = 1000 - totalScore
+        let scale = Math.round(measurement/100)
+        while (footPrintSection.hasChildNodes()) {  
+            footPrintSection.removeChild(footPrintSection.firstChild);
+        }
+        for (let i=0; i<scale; i++){
+            let footprint = document.createElement("i")
+            footprint.setAttribute ("class","fas fa-shoe-prints")
+            console.log(footprint)
+            footPrintSection.appendChild(footprint)
+        }
+    
+    //refresh the whole page for new day
+        
+        game["time"] = 24
+        game.start()
+        
+        console.log("resart")
+
+    //clear to-do list
+        
+
+    //clear daylog
+        
+           
+    })
+}
+
 
 
 const changeToNoon = function(){
@@ -177,37 +263,41 @@ const changeToNight = function(){
     body.classList.add("night")
 }
 
+const changeToDay = function(){
+    body.classList.remove("night")
+    body.classList.add ("day")
+}
+
 
 
 //////game logic
 createRandomList()
 
-// checkmark()
 
-const game = {
-    time: 24,
-    start(){
-        const gameTimer = setInterval(() => {
+// const game = {
+//     time: 24,
+//     start(){
+//         const gameTimer = setInterval(() => {
             
-            this.time= this.time -1
-            if ( this.time == 0){
-                clearInterval (gameTimer)
-                this.end()
-            } else if (this.time === 18){
-                changeToNoon()
-            } else if (this.time === 12){
-                changeToSunset()
-            } else if (this.time === 6){
-                changeToNight ()
-            }
-        }, 1000)
-    },
-    end() {
-        // alert ("gameover!!")
-        console.log("gameover")
+//             this.time= this.time -1
+//             if ( this.time == 0){
+//                 clearInterval (gameTimer)
+//                 this.end()
+//             } else if (this.time === 18){
+//                 changeToNoon()
+//             } else if (this.time === 12){
+//                 changeToSunset()
+//             } else if (this.time === 6){
+//                 changeToNight ()
+//             }
+//         }, 1000)
+//     },
+//     end() {
+//         // alert ("gameover!!")
+//         console.log("gameover")
 
-    }
-}
+//     }
+// }
 game.start()
 
     
