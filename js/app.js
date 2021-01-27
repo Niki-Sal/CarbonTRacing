@@ -12,13 +12,12 @@ let tasks = [
     {taskName: "trip to lA", 
     taskComplete:{
         "airplane": "trip to lA",
-        "bus": "trip to lA"}
+        "train": "trip to lA"}
     },
     {taskName: "Reading news", 
     taskComplete:{
         "light bulb,newspaper": "Reading news",
         "newspaper,light bulb": "Reading news"}
-        // "newspaper": "Reading news"
     },
     {taskName: "Watching TV", 
     taskComplete: {
@@ -30,16 +29,11 @@ let tasks = [
         "dryer,washing machine": "doing Laundry",
         "washing machine,air drying cloth": "doing Laundry",
         "air drying cloth,washing machine": "doing Laundry"}
-        // "dryer": "doing Laundry",
-        // "air drying cloth": "doing Laundry"}
     },
     {taskName: "cooking", 
     taskComplete: {
         "refrigerator,stove,animal based products": "cooking",
         "refrigerator,stove,plant based products": "cooking"}
-        // "stove": "cooking",
-        // "animal based products": "cooking",
-        // "plant based products": "cooking"}
     },
     {taskName: "coffee with a friend", 
     taskComplete: {
@@ -49,9 +43,6 @@ let tasks = [
         "bicycle,coffee": "coffee with a friend",
         "coffee,car": "coffee with a friend",
         "car,coffee": "coffee with a friend"}
-        // "walking": "coffee with a friend",
-        // "car": "coffee with a friend",
-        // "bicycle": "coffee with a friend",}
     },
 ]
 //defining all activities scores
@@ -82,18 +73,13 @@ let activities = [
 ]
 
 let todayActivity = []
-let commute = ["walking","car","bicycle","public Transportation","airplain","train"]
-let energyConsumption = ["light Bulb", "TV", "washer", "dryer", "refrigerator","stove"]
-let supplies = ["animal based products", "plant based products", "coffee", "newspaper"]
-let energyPositive = ["recycling paper", "compost food", "speed down car","air drying cloth", "unplug unused electrical devices","use product with little package"]
 let toDoList=[]
-// let level = 3
-let level = parseInt(prompt("please enter level"))
+let level = 1
 let myActivity=[]
 let myScore =[]
 let activityNeeded =[]
 let acts={}
-let acti={}
+
 
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
@@ -103,155 +89,67 @@ let activitySubmitButton = document.getElementById("activity-submit")
 let body = document.querySelector("body")
 let activityItem = document.getElementsByClassName("activity-item")
 let todayList = document.getElementById ("day-activities")
-let check1 = document. getElementById ("check1")
-let check2 = document. getElementById ("check2")
-let check3 = document. getElementById ("check3")
 
+
+let item;
 let item1 = document.createElement("li")
-let item2 = document.createElement("li")
-let item3 = document.createElement("li")
-
-let items = []
-items.push (item1)
-items.push (item2)
-items.push (item3)
-console.log (items)
 
 ///////create functions & eventlisteners
-const createRandomList = function (){
-    let randNum=[]
-        if (level === 1){
-            let Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-        } else if (level === 2){
-            let Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-            Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-        } else if (level === 3){
-            let Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-            Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-            Num = Math.floor(Math.random()* (tasks.length))
-            randNum.push(Num)
-        }
-        for (let i=0; i<randNum.length; i++){
-            let n= randNum[i]
-            toDoList.push(tasks[n].taskName)
-        }
-        console.log(toDoList)
-        for (let i=0; i<toDoList.length; i++ ){
-            items[i].innerText=`${toDoList[i]}`
-            items[i].classList.add("undone")
-            toDoListMenu.appendChild(items[i])
-        }
+const createRandomList = function (){ 
+    let Num = Math.floor(Math.random()* (tasks.length))
+    toDoList=[tasks[Num].taskName]
+    
+    console.log(toDoList)
+       
+    for (let n=0; n<tasks.length; n++){
+        if (tasks[n].taskName === toDoList[0]){
+            acts = tasks[n].taskComplete
+        }   
+    }                    
         
+    console.log(acts)
         
-        for (let i=0; i<toDoList.length; i++){
-            for (let n=0; n<tasks.length; n++){
-                if (tasks[n].taskName === toDoList[i]){
-                    acts[i] = tasks[n].taskComplete
-                    // Object.assign(acti, acts[0],acts[1],acts[2])
-                }   
-            }                    
-        }
-        console.log(acts)
-        addToUserActivity()
-         
-        
-}
-
-const addToUserActivity = function(){
+    item = document.createElement("li")
+    item.innerText=`${toDoList[0]}`
+    item.classList.add("undone")
+    toDoListMenu.appendChild(item)   
+    
     for (let i=0; i<activityItem.length; i++){
-        activityItem[i].addEventListener("click", function(e){
-            let dailyActivity = document.createElement ("li")
-            dailyActivity.innerText = activityItem[i].innerText
-            todayList.appendChild(dailyActivity)
-            activityItem[i].classList.add ("chosen")
-            for (let j=0; j<activities.length; j++){
-                if (activities[j].name === dailyActivity.innerText.toLowerCase()){
-                    let activityScore = document.createElement ("p")
-                    activityScore.innerText = activities[j].score
-                    scoreContainer.appendChild(activityScore)
-                    activityScore.classList.add("score")
-                    
-                    myScore.push(activities[j].score)
-                    myActivity.push(activities[j].name)
-
-                }
-            }
-            // console.log(myActivity)
-            console.log(myScore)
-            console.log(acts)
-            check1.addEventListener ("click", function(){
-                let myActivityStr = myActivity.toString()
-                let current = acts[0]
-                console.log (current)
-                if(current[myActivityStr] !== undefined){
-                    
-                    console.log("Hurrayyyyyyyy") 
-                    // alert("you are done for today!")
-                    items[0].classList.remove("undone")
-                    items[0].classList.add("done") 
-                    
-                }else{
-                    console.log(myActivityStr)
-                    console.log(":(")
-                } 
-                myActivity =[]
-
-            })
-            check2.addEventListener ("click", function(){
-                let myActivityStr = myActivity.toString()
-                let current = acts[1]
-                console.log (current)
-                if(current[myActivityStr] !== undefined){
-                    
-                    console.log("Hurrayyyyyyyy") 
-                    // alert("you are done for today!")
-                    items[1].classList.remove("undone")
-                    items[1].classList.add("done") 
-                    
-                }else{
-                    console.log(myActivityStr)
-                    console.log(":(")
-                }
-                myActivity =[] 
-
-            })
-            check3.addEventListener ("click", function(){
-                let myActivityStr = myActivity.toString()
-                let current = acts[2]
-                console.log (current)
-                if(current[myActivityStr] !== undefined){
-                    
-                    console.log("Hurrayyyyyyyy") 
-                    // alert("you are done for today!")
-                    items[2].classList.remove("undone")
-                    items[2].classList.add("done") 
-                    
-                }else{
-                    console.log(myActivityStr)
-                    console.log(":(")
-                } 
-                
-
-            })
-            
-            
-        })
+        
+        activityItem[i].addEventListener("click", clicki)
+        
     }
 }
 
-/////////////////////////////////////////////////////
+const clicki = function (e){
+    let dailyActivity = document.createElement ("li")
+    dailyActivity.innerText = e.target.innerText
+    todayList.appendChild(dailyActivity)
+    e.target.classList.add ("chosen")
+    for (let j=0; j<activities.length; j++){
+        if (activities[j].name === dailyActivity.innerText.toLowerCase()){
+            let activityScore = document.createElement ("p")
+            activityScore.innerText = activities[j].score
+            scoreContainer.appendChild(activityScore)
+            activityScore.classList.add("score")
+            
+            myScore.push(activities[j].score)
+            myActivity.push(activities[j].name)
 
-
-
-
-
-///////////////////////////////////////////////
-
+        }
+        e.target.removeEventListener("click", clicki)
+    }
+    // console.log(myActivity)
+    console.log(myScore)
+    let myActivityStr = myActivity.toString()
+    if(acts[myActivityStr] !== undefined){
+        
+        console.log("Hurrayyyyyyyy") 
+        item.classList.remove("undone")
+        item.classList.add("done") 
+        myActivity = [] 
+    } 
+}
 
 activitySubmitButton.addEventListener("click", function(){
     let score = parseInt(myScore[0])
@@ -261,7 +159,8 @@ activitySubmitButton.addEventListener("click", function(){
         console.log(score)
     }
     scorenumber.innertext = score
-    todayScore.append(score)    
+    todayScore.append(score)
+    createRandomList()    
 })
 
 
@@ -304,7 +203,7 @@ const game = {
         }, 1000)
     },
     end() {
-        alert ("gameover!!")
+        // alert ("gameover!!")
         console.log("gameover")
 
     }
