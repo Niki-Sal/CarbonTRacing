@@ -96,65 +96,141 @@ let userDisplay = document.getElementById("user")
 let nextButton = document.getElementById("next")
 let footPrintSection = document.getElementById ("foot-print")
 let endDay = document. getElementById ("end-day")
-
+let startButton = document.getElementById ("start")
+let resetButton = document.getElementById ("reset")
+let numbersArray;
 let item;
 let item1 = document.createElement("li")
 
 ///how game start +game timing and background change
+
+
 const game = {
     time: 24,
     start(){
         console.log(this.time)
         const gameTimer = setInterval(() => {
-
-            if ( this.time == 0){
+            console.log (this.time)
+            
+            if ( this.time <= 0){
+                
                 clearInterval (gameTimer)
                 this.end()
+            }else if (this.time === 24){
+                
+                changeToDay()
             } else if (this.time === 18){
+                
                 changeToNoon()
             } else if (this.time === 12){
+                
                 changeToSunset()
             } else if (this.time === 6){
+                
                 changeToNight ()
-            } else if (this.time === 24){
-                changeToDay()
-            }
+            } 
             this.time= this.time -1
-        }, 1000)
+            
+        }, 2000)
 
     },
     end() {
-        // alert ("gameover!!")
+        
         console.log("gameover")
-        //put a note somewhere
-        //make next task unclickable
-        activitySubmitButton.addEventListener("click", function(){
-            endDay. innerText= "Day ended! Get some sleep💤"
-            
-        })
+        endDay. innerText= "Day ended! Get some sleep💤"
+        document.getElementById("activity-submit").disabled = true 
         restartDay()
 
     }
 }
 
-///////create functions & eventlisteners
+// changing background functions
+const changeToNoon = function(){
+    body.classList.remove("day")
+    body.classList.add("noon")
+}
+const changeToSunset = function(){
+    body.classList.remove("noon")
+    body.classList.add("sunset")
+}
+const changeToNight = function(){
+    body.classList.remove("sunset")
+    body.classList.add("night")
+}
 
-//create random task in to-do list
-const createRandomList = function (){ 
-    //generate random number
-    let Num = Math.floor(Math.random()* (tasks.length))
+const changeToDay = function(){
+    body.classList.remove("night")
+    body.classList.add ("day")
+}
+
+//create random number without repeatition
+function getRandomNumber (min, max) {
+    let step1 = max - min + 1
+    let step2 = Math.random() * step1
+    let result = Math.floor(step2) +min
+    return result
+}
+function createNumberArray (a,b){
+    let myArray = []
+
+    for(let i=a; i<=b; i++){
+        myArray.push(i)
+    }
+    return myArray
+}
+
+///////other eventListener & functions 
+//start game
+
+startButton.addEventListener ("click",() => {
+    game.start()
+    numbersArray = createNumberArray (0,6)
+})
+
+//counting the score of the day///////////////////////////////////////////////////
+activitySubmitButton.addEventListener("click", function(){
+    score = parseInt(myScore[0])
+    
+    for (let n=1; n<myScore.length; n++){
+        score= score + myScore[n]
+        console.log(score)
+    }
+    scoreNumber.innerText = score
+    todayScore.append(scoreNumber)
+    //creating another task
+    
+    // game.start()
+    createTaskList()
+     
+})
+
+
+
+
+
+
+//create to-do list task//////////////////////////////////////////////////////////
+const createTaskList = function (){ 
+    //generate non repetitive random number
+    if (numbersArray.length ==0){
+        console.log ("no more task!")
+    }
+    let randomIndex = getRandomNumber (0 , numbersArray.length-1)
+    let Num = numbersArray[randomIndex]
+    numbersArray.splice(randomIndex,1)
 
     //generate a list of the task (one current task) on hand
+    
     toDoList=[tasks[Num].taskName]
     
     console.log(toDoList)
-     //generate an object containing all activities neede to complete the current task  
+    //generate an object containing all activities neede to complete the current task  
     for (let n=0; n<tasks.length; n++){
         if (tasks[n].taskName === toDoList[0]){
             acts = tasks[n].taskComplete
         }   
-    }                    
-        
+    }
+       
     console.log(acts)
     // create the list of all task done on the day   
     item = document.createElement("li")
@@ -162,19 +238,22 @@ const createRandomList = function (){
     item.classList.add("undone")
     //append the list to document
     toDoListMenu.appendChild(item)
-    
-       
+        
     /////running clicki function below
     for (let i=0; i<activityItem.length; i++){
         
-        activityItem[i].addEventListener("click", clicki)
+        activityItem[i].addEventListener("click", choosingActivity)
         
     }
 }
 
-//The process of choosing an activity on left side, appending it to middle column
+const resetActicityChosen = function (){
+    myActivity =[]
+    // myScore =[]
+}
+//The process of choosing an activity on left side, appending it to middle column///////////////////////////////
 //appending the activity's associated score to middle column
-const clicki = function (e){
+const choosingActivity = function (e){
     let dailyActivity = document.createElement ("li")
     dailyActivity.innerText = e.target.innerText
     todayList.appendChild(dailyActivity)
@@ -190,7 +269,7 @@ const clicki = function (e){
             myActivity.push(activities[j].name)
 
         }
-        e.target.removeEventListener("click", clicki)
+        e.target.removeEventListener("click", choosingActivity)
         e.target.classList.remove("chosen")
     }
     // console.log(myActivity)
@@ -204,22 +283,13 @@ const clicki = function (e){
         item.classList.add("done") 
         myActivity = [] 
     } 
+    resetButton.addEventListener("click", resetActicityChosen)
 }
-//counting the score of the day
-activitySubmitButton.addEventListener("click", function(){
-    score = parseInt(myScore[0])
-    
-    for (let n=1; n<myScore.length; n++){
-        score= score + myScore[n]
-        console.log(score)
-    }
-    scoreNumber.innerText = score
-    todayScore.append(scoreNumber)
-    //creating another task
-    createRandomList() 
-     
-})
-// refresh the whole game (new day) +showing the previous day score and footprint
+
+
+
+
+//////////// refresh the whole game (new day) +showing the previous day score and footprint
 
 const restartDay =function (){
     nextButton.addEventListener("click",function(){
@@ -259,25 +329,25 @@ const restartDay =function (){
             }
 
         } else {
-            game["time"] = 24
-        game.start()
-        
-        console.log("resart")
+    
+            endDay. innerText= ""
+            console.log("resart")
 
-        //clear to-do list
-        while (toDoListMenu.hasChildNodes()) {  
-            toDoListMenu.removeChild(toDoListMenu.firstChild);
-        }
-        //clear daylog
-     
-        while (scoreContainer.hasChildNodes()) {  
-            scoreContainer.removeChild(scoreContainer.firstChild);
-        } 
-        while (todayList.hasChildNodes()) {  
-            todayList.removeChild(todayList.firstChild);
-        }  
-        //refresh the whole page for new day
-        endDay. innerText= ""
+            //clear to-do list
+            while (toDoListMenu.hasChildNodes()) {  
+                toDoListMenu.removeChild(toDoListMenu.firstChild);
+            }
+            //clear daylog
+        
+            while (scoreContainer.hasChildNodes()) {  
+                scoreContainer.removeChild(scoreContainer.firstChild);
+            } 
+            while (todayList.hasChildNodes()) {  
+                todayList.removeChild(todayList.firstChild);
+            }  
+            //refresh the whole page for new day
+            document.getElementById("activity-submit").disabled = false
+            game["time"] = 24
 
         } 
         
@@ -289,30 +359,6 @@ const restartDay =function (){
 }
 
 
-// changing background
-const changeToNoon = function(){
-    body.classList.remove("day")
-    body.classList.add("noon")
-}
-const changeToSunset = function(){
-    body.classList.remove("noon")
-    body.classList.add("sunset")
-}
-const changeToNight = function(){
-    body.classList.remove("sunset")
-    body.classList.add("night")
-}
-
-const changeToDay = function(){
-    body.classList.remove("night")
-    body.classList.add ("day")
-}
-
-
-
-//////game logic
-createRandomList()
-game.start()
 
     
 
