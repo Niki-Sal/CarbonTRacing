@@ -7,69 +7,84 @@ let tasks = [
         "walking": "going to work",
         "car": "going to work",
         "bicycle":"going to work",
-        "public transportation": "going to work"}
+        "public transportation": "going to work"},
+    taskRelated: {
+        "speed down car": "going to work",
+        "speed up car": "going to work",
+    }
     },
     {taskName: "trip to lA", 
     taskComplete:{
         "airplane": "trip to lA",
-        "train": "trip to lA"}
+        "train": "trip to lA"},
+    taskRelated: {
+
+    }
     },
     {taskName: "Reading news", 
     taskComplete:{
-        "light bulb,newspaper": "Reading news",
-        "newspaper,light bulb": "Reading news"}
+        "newspaper": "Reading news"
+    },
+    taskRelated: {
+        "recycling paper": "Reading news"
+    }
     },
     {taskName: "Watching TV", 
     taskComplete: {
-        "tv":"Watching TV"}
+        "tv":"Watching TV"},
+    taskRelated: {
+        "unplug unused electrical devices":"Watching TV"
+    }
     },
     {taskName: "doing Laundry", 
     taskComplete:{
-        "washing machine,dryer": "doing Laundry",
-        "dryer,washing machine": "doing Laundry",
-        "washing machine,air drying cloth": "doing Laundry",
-        "air drying cloth,washing machine": "doing Laundry"}
+        "washing machine": "doing Laundry"
+    },
+    taskRelated: {
+        "dryer": "doing Laundry",
+        "air drying cloth": "doing Laundry",
+    }
     },
     {taskName: "cooking", 
     taskComplete: {
-        "refrigerator,stove,animal based products": "cooking",
-        "refrigerator,stove,plant based products": "cooking"}
+        "stove": "cooking"
+    },
+    taskRelated:{
+        "animal based products": "cooking",
+        "plant based products": "cooking"
+    }
     },
     {taskName: "coffee with a friend", 
     taskComplete: {
-        "coffee,walking": "coffee with a friend",
-        "walking,coffee": "coffee with a friend",
-        "coffee,bicycle": "coffee with a friend",
-        "bicycle,coffee": "coffee with a friend",
-        "coffee,car": "coffee with a friend",
-        "car,coffee": "coffee with a friend"}
+        "coffee": "coffee with a friend"
+    },
+    taskRelated: {
+        "bring reusable mug": "coffee with a friend",
+    }
     },
 ]
 //defining all activities scores
 let activities = [
-    {name: "walking", score: 50},
+    {name: "walking", score: 40},
     {name: "car", score: -100},
-    {name: "bicycle", score: 20},
-    {name: "public transportation", score: -20},
+    {name: "bicycle", score: 40},
+    {name: "public transportation", score: 40},
     {name: "airplane", score: -200},
-    {name: "train", score: -150},
-    {name:"light bulb", score: -20 },
-    {name:"tv", score: -20 },
-    {name:"washing machine", score: -30 },
-    {name:"dryer", score: -30 },
-    {name:"refrigerator", score: -20 },
-    {name:"stove", score:-20},
-    {name:"animal based products", score: -20 },
-    {name:"plant based products", score: -5  },
-    {name:"coffee", score: -10 },
-    {name:"newspaper", score: -10 },
-    {name:"recycling paper", score: 20},
-    {name:"compost extra food", score: 20},
-    {name:"speed down car", score: 20},
-    {name:"air drying cloth", score: 20},
-    {name:"unplug unused electrical devices", score: 20},
-    {name:"use products with little packaging", score: 20}
-
+    {name: "train", score: -100},
+    {name: "newspaper", score: -20 },
+    {name: "tv", score: -20 },
+    {name: "washing machine", score: -20 },
+    {name: "stove", score:-20},
+    {name: "coffee", score: -20 },
+    {name: "speed down car", score: 50},
+    {name: "speed up car", score: -50},
+    {name: "recycling paper", score: 50},
+    {name: "unplug unused electrical devices", score: 50},
+    {name: "air drying cloth", score: 50},
+    {name: "dryer", score: -50 },
+    {name: "plant based products", score: 50 },
+    {name: "animal based products", score: -50 },
+    {name:"bring reusable mug", score: 50}
 ]
 
 let todayActivity = []
@@ -81,6 +96,7 @@ let score = 0
 let activityNeeded =[]
 let acts={}
 let totalScore = 1000
+let restartNum = 0
 
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
@@ -97,9 +113,11 @@ let nextButton = document.getElementById("next")
 let footPrintSection = document.getElementById ("foot-print")
 let endDay = document. getElementById ("end-day")
 let startButton = document.getElementById ("start")
-let resetButton = document.getElementById ("reset")
+let timer = document.getElementById ("timer")
+// let resetButton = document.getElementById ("reset")
 let numbersArray;
 let item;
+let activityScore;
 let item1 = document.createElement("li")
 
 ///how game start +game timing and background change
@@ -111,6 +129,7 @@ const game = {
         console.log(this.time)
         const gameTimer = setInterval(() => {
             console.log (this.time)
+            timer.innerText = `${this.time}`
             
             if ( this.time <= 0){
                 
@@ -230,6 +249,13 @@ const createTaskList = function (){
             acts = tasks[n].taskComplete
         }   
     }
+
+    for (let n=0; n<tasks.length; n++){
+        if (tasks[n].taskName === toDoList[0]){
+            actsRel = tasks[n].taskRelated
+        }   
+    }
+
        
     console.log(acts)
     // create the list of all task done on the day   
@@ -247,10 +273,10 @@ const createTaskList = function (){
     }
 }
 
-const resetActicityChosen = function (){
-    myActivity =[]
-    // myScore =[]
-}
+// const resetActicityChosen = function (){
+//     myActivity =[]
+//     // myScore =[]
+// }
 //The process of choosing an activity on left side, appending it to middle column///////////////////////////////
 //appending the activity's associated score to middle column
 const choosingActivity = function (e){
@@ -260,7 +286,7 @@ const choosingActivity = function (e){
     e.target.classList.add ("chosen")
     for (let j=0; j<activities.length; j++){
         if (activities[j].name === dailyActivity.innerText.toLowerCase()){
-            let activityScore = document.createElement ("p")
+            activityScore = document.createElement ("p")
             activityScore.innerText = activities[j].score
             scoreContainer.appendChild(activityScore)
             activityScore.classList.add("score")
@@ -276,14 +302,22 @@ const choosingActivity = function (e){
     //the process of cheching each task as done if the right activities are chosen
     console.log(myScore)
     let myActivityStr = myActivity.toString()
+    console.log (myActivityStr)
     if(acts[myActivityStr] !== undefined){
-        
         console.log("Hurrayyyyyyyy") 
         item.classList.remove("undone")
         item.classList.add("done") 
+        myActivity = []
+    } else if (actsRel[myActivityStr] !== undefined){
+        console.log("Hurrayyyyyyyy2") 
         myActivity = [] 
-    } 
-    resetButton.addEventListener("click", resetActicityChosen)
+    } else {
+        console.log ("wrong choice!") 
+        // activityScore.removeChild(activityScore.firstChild)
+        // todayList.removeChild(todayList.firstChild)
+        myActivity = [] 
+       
+    }    
 }
 
 
@@ -293,7 +327,6 @@ const choosingActivity = function (e){
 
 const restartDay =function (){
     nextButton.addEventListener("click",function(){
-        
         //add scoreNumber to total score
         let totalScore= parseInt(totalScoreDisplay.innerText.slice(21))
         let scoreNumberInt = parseInt(scoreNumber.innerText)
@@ -321,13 +354,23 @@ const restartDay =function (){
             footPrintSection.appendChild(footprint)
         }
 
-        if (totalScore < 0){
-            console.log ("YOU LOST")
+        if (totalScore <= 500){
+            console.log ("YOU LOST🙈")
             if (toDoListMenu.hasChildNodes()) {  
                 toDoListMenu.removeChild(toDoListMenu.firstChild);
-                toDoListMenu.innerText = "YOU LOST!"
+                toDoListMenu.innerText = "YOU LOST🙈"
+                document.getElementById("next").disabled = true 
+                document.getElementById("start").disabled = true 
+                endDay. innerText = ""
             }
 
+        } else if (restartNum>=2 && totalScore> 500){
+            console.log ("YOU WON🥂")
+            if (toDoListMenu.hasChildNodes()) {  
+                toDoListMenu.removeChild(toDoListMenu.firstChild);
+                toDoListMenu.innerText = "YOU WON🥂"
+                endDay. innerText = ""
+            }
         } else {
     
             endDay. innerText= ""
@@ -354,6 +397,7 @@ const restartDay =function (){
         myScore =[]
         score =0 
         scoreNumber.innerText = score
+        restartNum = restartNum+1
     
     })
 }
