@@ -77,13 +77,14 @@ let toDoList=[]
 let level = 1
 let myActivity=[]
 let myScore =[]
+let score = 0
 let activityNeeded =[]
 let acts={}
 let totalScore = 1000
 
 ///////create DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
-let scoreContainer = document.getElementById("score-container")
+let scoreContainer = document.getElementById("scoreNum-container")
 let todayScore =document.getElementById("today-score")
 let activitySubmitButton = document.getElementById("activity-submit")
 let body = document.querySelector("body")
@@ -94,11 +95,12 @@ let totalScoreDisplay = document.getElementById("total-score")
 let userDisplay = document.getElementById("user")
 let nextButton = document.getElementById("next")
 let footPrintSection = document.getElementById ("foot-print")
+let endDay = document. getElementById ("end-day")
 
 let item;
 let item1 = document.createElement("li")
 
-
+///how game start +game timing and background change
 const game = {
     time: 24,
     start(){
@@ -126,18 +128,27 @@ const game = {
         console.log("gameover")
         //put a note somewhere
         //make next task unclickable
+        activitySubmitButton.addEventListener("click", function(){
+            endDay. innerText= "Day ended! Get some sleep💤"
+            
+        })
         restartDay()
 
     }
 }
 
 ///////create functions & eventlisteners
+
+//create random task in to-do list
 const createRandomList = function (){ 
+    //generate random number
     let Num = Math.floor(Math.random()* (tasks.length))
+
+    //generate a list of the task (one current task) on hand
     toDoList=[tasks[Num].taskName]
     
     console.log(toDoList)
-       
+     //generate an object containing all activities neede to complete the current task  
     for (let n=0; n<tasks.length; n++){
         if (tasks[n].taskName === toDoList[0]){
             acts = tasks[n].taskComplete
@@ -145,12 +156,15 @@ const createRandomList = function (){
     }                    
         
     console.log(acts)
-        
+    // create the list of all task done on the day   
     item = document.createElement("li")
     item.innerText=`${toDoList[0]}`
     item.classList.add("undone")
-    toDoListMenu.appendChild(item)   
+    //append the list to document
+    toDoListMenu.appendChild(item)
     
+       
+    /////running clicki function below
     for (let i=0; i<activityItem.length; i++){
         
         activityItem[i].addEventListener("click", clicki)
@@ -158,6 +172,8 @@ const createRandomList = function (){
     }
 }
 
+//The process of choosing an activity on left side, appending it to middle column
+//appending the activity's associated score to middle column
 const clicki = function (e){
     let dailyActivity = document.createElement ("li")
     dailyActivity.innerText = e.target.innerText
@@ -175,8 +191,10 @@ const clicki = function (e){
 
         }
         e.target.removeEventListener("click", clicki)
+        e.target.classList.remove("chosen")
     }
     // console.log(myActivity)
+    //the process of cheching each task as done if the right activities are chosen
     console.log(myScore)
     let myActivityStr = myActivity.toString()
     if(acts[myActivityStr] !== undefined){
@@ -187,9 +205,9 @@ const clicki = function (e){
         myActivity = [] 
     } 
 }
-
+//counting the score of the day
 activitySubmitButton.addEventListener("click", function(){
-    let score = parseInt(myScore[0])
+    score = parseInt(myScore[0])
     
     for (let n=1; n<myScore.length; n++){
         score= score + myScore[n]
@@ -197,6 +215,7 @@ activitySubmitButton.addEventListener("click", function(){
     }
     scoreNumber.innerText = score
     todayScore.append(scoreNumber)
+    //creating another task
     createRandomList() 
      
 })
@@ -231,25 +250,46 @@ const restartDay =function (){
             console.log(footprint)
             footPrintSection.appendChild(footprint)
         }
-    
-    //refresh the whole page for new day
-        
-        game["time"] = 24
+
+        if (totalScore < 0){
+            console.log ("YOU LOST")
+            if (toDoListMenu.hasChildNodes()) {  
+                toDoListMenu.removeChild(toDoListMenu.firstChild);
+                toDoListMenu.innerText = "YOU LOST!"
+            }
+
+        } else {
+            game["time"] = 24
         game.start()
         
         console.log("resart")
 
-    //clear to-do list
-        
+        //clear to-do list
+        while (toDoListMenu.hasChildNodes()) {  
+            toDoListMenu.removeChild(toDoListMenu.firstChild);
+        }
+        //clear daylog
+     
+        while (scoreContainer.hasChildNodes()) {  
+            scoreContainer.removeChild(scoreContainer.firstChild);
+        } 
+        while (todayList.hasChildNodes()) {  
+            todayList.removeChild(todayList.firstChild);
+        }  
+        //refresh the whole page for new day
+        endDay. innerText= ""
 
-    //clear daylog
+        } 
         
-           
+        myScore =[]
+        score =0 
+        scoreNumber.innerText = score
+    
     })
 }
 
 
-
+// changing background
 const changeToNoon = function(){
     body.classList.remove("day")
     body.classList.add("noon")
@@ -272,32 +312,6 @@ const changeToDay = function(){
 
 //////game logic
 createRandomList()
-
-
-// const game = {
-//     time: 24,
-//     start(){
-//         const gameTimer = setInterval(() => {
-            
-//             this.time= this.time -1
-//             if ( this.time == 0){
-//                 clearInterval (gameTimer)
-//                 this.end()
-//             } else if (this.time === 18){
-//                 changeToNoon()
-//             } else if (this.time === 12){
-//                 changeToSunset()
-//             } else if (this.time === 6){
-//                 changeToNight ()
-//             }
-//         }, 1000)
-//     },
-//     end() {
-//         // alert ("gameover!!")
-//         console.log("gameover")
-
-//     }
-// }
 game.start()
 
     

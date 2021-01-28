@@ -71,14 +71,15 @@ ul{
     padding: 5px;
 }
 .activity-item:hover {
-    color: green
+    color: green;
+    cursor: pointer
 }
 
 /* + */
-
 .chosen {
-    color: green;
+    color:green;
 }
+
 
 
 
