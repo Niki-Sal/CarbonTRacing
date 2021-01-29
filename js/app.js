@@ -13,10 +13,10 @@ let tasks = [
         "speed up car": "going to work",
     }
     },
-    {taskName: "trip to lA", 
+    {taskName: "take a trip", 
     taskComplete:{
-        "airplane": "trip to lA",
-        "train": "trip to lA"},
+        "airplane": "take a trip",
+        "train": "take a trip"},
     taskRelated: {
 
     }
@@ -159,7 +159,7 @@ const game = {
             } 
             this.time= this.time -1
             
-        }, 2000)
+        }, 1000)
 
     },
     end() {
