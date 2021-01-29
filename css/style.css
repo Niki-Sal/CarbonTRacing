@@ -33,12 +33,18 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
-
+.body{
+    transition: background-image 2s;
+}
 
 
 /* navbar*/
 nav{
-    background-color: gray
+    background-color:rgb(249,240,141)
+}
+#nav-title{
+    padding:10px;
+    padding-left: 20px;
 }
 
 /* container*/
@@ -53,7 +59,7 @@ nav{
 
 /* left column*/
 #activity-list{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.35);
     border-radius: 5px;
 }
 .activity-title{
@@ -88,13 +94,13 @@ ul{
     width: 400px;
 }
 #today-page{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.35);
     height: 700px;
     margin-top: 30px;
     border-radius: 15px;
 }
 #today-log{
-    height: 670px;
+    height: 600px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -131,7 +137,7 @@ ul{
     text-align: center;
 }
 #to-do-list{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.35);
     border-radius: 10px;
     width: 300px;
     height: 380px;
@@ -159,9 +165,41 @@ ul{
     text-decoration: line-through;
 }
 
+#timer{
+    
+    font-size: 40px;
+}
+#list, #end-day{
+    margin: 20px;
+}
+
 /*lives*/
 #foot-print{
     font-size: 30px;
     color: rgb(71, 71, 71);
     
+}
+/*instruction*/
+.note {
+    font-size: 11px;
+    white-space: pre-line;
+    margin-top: 20px;
+
+}
+#name-submit{
+    display:flex;
+    flex-direction: row;
+    
+}
+#name-submit-button{
+    background-color: rgb(249,240,141);
+}
+/*buttons*/
+#start , #activity-submit , #next {
+    background-color: rgb(249,240,141);
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
 }

@@ -1,6 +1,6 @@
-////////global variables
-//defining an array of objects for each task. including task name and an object of activities 
-//that cause that task to be done.
+//global variables
+//defining an array of tasks including: task name + an object of task-complete that include activities
+// cause the task to be done + an object of task-related for environmentally friendly but not require activities
 let tasks = [
     {taskName: "going to work", 
     taskComplete: {
@@ -65,9 +65,9 @@ let tasks = [
 ]
 //defining all activities scores
 let activities = [
-    {name: "walking", score: 40},
+    {name: "walking", score: 50},
     {name: "car", score: -100},
-    {name: "bicycle", score: 40},
+    {name: "bicycle", score: 50},
     {name: "public transportation", score: 40},
     {name: "airplane", score: -200},
     {name: "train", score: -100},
@@ -84,9 +84,9 @@ let activities = [
     {name: "dryer", score: -50 },
     {name: "plant based products", score: 50 },
     {name: "animal based products", score: -50 },
-    {name:"bring reusable mug", score: 50}
+    {name: "bring reusable mug", score: 50}
 ]
-
+// all other variables
 let todayActivity = []
 let toDoList=[]
 let level = 1
@@ -98,7 +98,7 @@ let acts={}
 let totalScore = 1000
 let restartNum = 0
 
-///////create DOM elements
+//DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
 let scoreContainer = document.getElementById("scoreNum-container")
 let todayScore =document.getElementById("today-score")
@@ -114,14 +114,23 @@ let footPrintSection = document.getElementById ("foot-print")
 let endDay = document. getElementById ("end-day")
 let startButton = document.getElementById ("start")
 let timer = document.getElementById ("timer")
-// let resetButton = document.getElementById ("reset")
+
 let numbersArray;
 let item;
 let activityScore;
 let item1 = document.createElement("li")
 
-///how game start +game timing and background change
 
+//user name
+
+document.querySelector("form").addEventListener("submit",(e)=>{
+    e.preventDefault()
+    let name = document.querySelector("input[type='text']").value
+    userDisplay.innerText = `Hi ${name}!`
+    document.querySelector("input[type='text']").value = ""
+})
+
+///How game start + game timing and background change
 
 const game = {
     time: 24,
@@ -163,7 +172,7 @@ const game = {
     }
 }
 
-// changing background functions
+// Background change functions
 const changeToNoon = function(){
     body.classList.remove("day")
     body.classList.add("noon")
@@ -198,27 +207,26 @@ function createNumberArray (a,b){
     return myArray
 }
 
-///////other eventListener & functions 
-//start game
+//other eventListener & functions 
+
+//start game and game timer
 
 startButton.addEventListener ("click",() => {
     game.start()
     numbersArray = createNumberArray (0,6)
 })
 
-//counting the score of the day///////////////////////////////////////////////////
+//counting the score of the day and create next task in to dolist
 activitySubmitButton.addEventListener("click", function(){
+    // score of day calculation
     score = parseInt(myScore[0])
-    
     for (let n=1; n<myScore.length; n++){
         score= score + myScore[n]
         console.log(score)
     }
     scoreNumber.innerText = score
     todayScore.append(scoreNumber)
-    //creating another task
-    
-    // game.start()
+    //create next task
     createTaskList()
      
 })
@@ -228,7 +236,7 @@ activitySubmitButton.addEventListener("click", function(){
 
 
 
-//create to-do list task//////////////////////////////////////////////////////////
+//create to-do list task
 const createTaskList = function (){ 
     //generate non repetitive random number
     if (numbersArray.length ==0){
@@ -265,7 +273,7 @@ const createTaskList = function (){
     //append the list to document
     toDoListMenu.appendChild(item)
         
-    /////running clicki function below
+    //choosing related activities to task and append to today activity log
     for (let i=0; i<activityItem.length; i++){
         
         activityItem[i].addEventListener("click", choosingActivity)
@@ -273,12 +281,8 @@ const createTaskList = function (){
     }
 }
 
-// const resetActicityChosen = function (){
-//     myActivity =[]
-//     // myScore =[]
-// }
-//The process of choosing an activity on left side, appending it to middle column///////////////////////////////
-//appending the activity's associated score to middle column
+//The process of choosing an activity on left side, appending it to middle column
+//+appending the activity's associated score to middle column
 const choosingActivity = function (e){
     let dailyActivity = document.createElement ("li")
     dailyActivity.innerText = e.target.innerText
@@ -298,8 +302,7 @@ const choosingActivity = function (e){
         e.target.removeEventListener("click", choosingActivity)
         e.target.classList.remove("chosen")
     }
-    // console.log(myActivity)
-    //the process of cheching each task as done if the right activities are chosen
+    //the process of checking each task as done if the right activities are chosen
     console.log(myScore)
     let myActivityStr = myActivity.toString()
     console.log (myActivityStr)
@@ -313,8 +316,6 @@ const choosingActivity = function (e){
         myActivity = [] 
     } else {
         console.log ("wrong choice!") 
-        // activityScore.removeChild(activityScore.firstChild)
-        // todayList.removeChild(todayList.firstChild)
         myActivity = [] 
        
     }    
@@ -323,7 +324,7 @@ const choosingActivity = function (e){
 
 
 
-//////////// refresh the whole game (new day) +showing the previous day score and footprint
+// refresh the whole game (new day) + showing the previous day score and footprint above page
 
 const restartDay =function (){
     nextButton.addEventListener("click",function(){
@@ -353,7 +354,7 @@ const restartDay =function (){
             console.log(footprint)
             footPrintSection.appendChild(footprint)
         }
-
+///winning and losing logic/////////////
         if (totalScore <= 500){
             console.log ("YOU LOST🙈")
             if (toDoListMenu.hasChildNodes()) {  

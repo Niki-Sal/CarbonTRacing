@@ -14,17 +14,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <script defer src="./js/app.js"></script>
 </head>
-<body class="day">
+<body class="day body">
     <header>
         <nav>
-            <h3>Saving Our 🌎</h3>
+            <h3 id = "nav-title">Calculate My Carbon Footprint</h3>
         </nav>
     </header>
 
     <div class="container">
         <div class="column" id="activity-list">
             <div class="activity-category">
-                <h5 class="activity-title">STEP-1: DAILY ACTIVITY</h5>
+                <h5 class="activity-title">DAILY ACTIVITY</h5>
                 <ul>
                     <li class="activity-item"><i class="fas fa-walking"></i>Walking</li>
                     <li class="activity-item"><i class="fas fa-car"></i>Car</li>
@@ -36,14 +36,12 @@
                     <li class="activity-item"><i class="fas fa-tv"></i>TV</li>
                     <li class="activity-item"><i class="far fa-caret-square-down"></i>Washing Machine</li>
                     <li class="activity-item"><i class="fas fa-box"></i>Stove</li> 
-                    <li class="activity-item"><i class="fas fa-coffee"></i>Coffee</li>
-                    
-                         
+                    <li class="activity-item"><i class="fas fa-coffee"></i>Coffee</li>      
                 </ul>
             </div>
             
             <div class="activity-category">
-                <h5 class="activity-title">STEP-2: HOW YOU CAN DO IT BETTER OR WORSE</h5>
+                <h5 class="activity-title">MORE ACTIVITY</h5>
                 <ul>
                     <li class="activity-item"><i class="fas fa-tachometer-alt"></i>Speed down car</li>
                     <li class="activity-item"><i class="fas fa-tachometer-alt"></i>Speed up car</li>
@@ -62,7 +60,7 @@
             <div id= "today-page">
                 <div id="today-log">
                     <div>
-                        <h4>user's Activities</h4>
+                        <h4>Activities</h4>
                         <ul id= "day-activities">
                         
                         </ul>
@@ -95,10 +93,10 @@
                 
             </div>
             <div class="log-subpanel" id="timer">
-                <div id= "timer">Timer</div>
+                <div id= "timer">24</div>
             </div>
             <button id="start">Start</button>
-                <h6>push to start the timer</h6>
+                
             <div class="log-subpanel" id="to-do-list">
                 <h4 id="list">To-Do List</h4>
                 <ul id= "random-tasks">
@@ -106,19 +104,39 @@
                 </ul>
                 
                 <p id="end-day"></p>
-                <button id="activity-submit">Next Task</button>
-                <h6>push to get your random daily taks</h6>
+                <button id="activity-submit">Task</button>
+                
                 
                 <button id="next">Next Day</button>
-                <h6>push to start a new day</h6>
-                <!-- <button id="reset">Reset</button> -->
+                
+                
 
+            </div>
+        </div>
+        <div class= "column" id="map">
+            
+            <div id= "inst-note">
+                <h6 style="color: rgb(249,240,141); font-size: 20px; margin-top: 30px"> INSTRUCTIONS</h6>
+                <div class= "note">
+                    <p>Please enter your name here:</p>
+                    <form id= "name-submit">
+                        <input type= "text">
+                        <input id = "name-submit-button" type= "submit">
+                    </form>
+                    
+                </div>
+                
+                <p class= "note">1- Please click on start button <br>ONCE and WAIT for timer to begin <br>
+                2- Click on Task button to <br>receive random tasks for day<br>
+                3- Choose an activity match the <br>task on left panel under <br>Daily Activity panel<br>
+                4- Choose an optional activity that<br> match the task on left panel <br>under More Activity panel<br>
+                3- Once the day ended click on<br> Next day to see your total score<br>
+                4- Go up and start from step 1<br> for a new day<br>
+                </p>
             </div>
         </div>
         
     </div>
     
-   
-
 </body>
 </html>
