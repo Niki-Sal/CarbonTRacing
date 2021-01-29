@@ -28,9 +28,9 @@ The planning materials used to build this app.
 * list of technologies
 HTML, CSS, Javascript
 * screen captures of your code
-![screenshot-1](./assets/html.jpg)
-![screenshot-2](./assets/css.jpg)
-![screenshot-3](./assets/javascript.jpg)
+![screenshot-1](./assets/html.png)
+![screenshot-2](./assets/css.png)
+![screenshot-3](./assets/javascript.png)
 
 ---
 ### Credits
