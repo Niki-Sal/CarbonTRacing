@@ -1,9 +1,95 @@
+//global variables
+//defining an array of tasks including: task name + an object of task-complete that include activities
+// cause the task to be done + an object of task-related for environmentally friendly but not require activities
+let tasks = [
+    {taskName: "going to work", 
+    taskComplete: {
+        "walking": "going to work",
+        "car": "going to work",
+        "bicycle":"going to work",
+        "public transportation": "going to work"},
+    taskRelated: {
+        "speed down car": "going to work",
+        "speed up car": "going to work",
+    }
+    },
+    {taskName: "take a trip", 
+    taskComplete:{
+        "airplane": "take a trip",
+        "train": "take a trip"},
+    taskRelated: {
 
-//GLOBAL VARIABLES/////////////////////////////////////////////////////////////////////////////
-
-// all pre-defined variables
+    }
+    },
+    {taskName: "Reading news", 
+    taskComplete:{
+        "newspaper": "Reading news"
+    },
+    taskRelated: {
+        "recycling paper": "Reading news"
+    }
+    },
+    {taskName: "Watching TV", 
+    taskComplete: {
+        "tv":"Watching TV"},
+    taskRelated: {
+        "unplug unused electrical devices":"Watching TV"
+    }
+    },
+    {taskName: "doing Laundry", 
+    taskComplete:{
+        "washing machine": "doing Laundry"
+    },
+    taskRelated: {
+        "dryer": "doing Laundry",
+        "air drying cloth": "doing Laundry",
+    }
+    },
+    {taskName: "cooking", 
+    taskComplete: {
+        "stove": "cooking"
+    },
+    taskRelated:{
+        "animal based products": "cooking",
+        "plant based products": "cooking"
+    }
+    },
+    {taskName: "coffee with a friend", 
+    taskComplete: {
+        "coffee": "coffee with a friend"
+    },
+    taskRelated: {
+        "bring reusable mug": "coffee with a friend",
+    }
+    },
+]
+//defining all activities scores
+let activities = [
+    {name: "walking", score: 50},
+    {name: "car", score: -100},
+    {name: "bicycle", score: 50},
+    {name: "public transportation", score: 40},
+    {name: "airplane", score: -200},
+    {name: "train", score: -100},
+    {name: "newspaper", score: -20 },
+    {name: "tv", score: -20 },
+    {name: "washing machine", score: -20 },
+    {name: "stove", score:-20},
+    {name: "coffee", score: -20 },
+    {name: "speed down car", score: 50},
+    {name: "speed up car", score: -50},
+    {name: "recycling paper", score: 50},
+    {name: "unplug unused electrical devices", score: 50},
+    {name: "air drying cloth", score: 50},
+    {name: "dryer", score: -50 },
+    {name: "plant based products", score: 50 },
+    {name: "animal based products", score: -50 },
+    {name: "bring reusable mug", score: 50}
+]
+// all other variables
 let todayActivity = []
 let toDoList=[]
+let level = 1
 let myActivity=[]
 let myScore =[]
 let score = 0
@@ -11,10 +97,6 @@ let activityNeeded =[]
 let acts={}
 let totalScore = 1000
 let restartNum = 0
-let numbersArray;
-let item;
-let activityScore;
-let tasks;
 
 //DOM elements
 let toDoListMenu = document.getElementById("random-tasks")
@@ -32,66 +114,21 @@ let footPrintSection = document.getElementById ("foot-print")
 let endDay = document. getElementById ("end-day")
 let startButton = document.getElementById ("start")
 let timer = document.getElementById ("timer")
+
+let numbersArray;
+let item;
+let activityScore;
 let item1 = document.createElement("li")
 
-//Defining an object constructor for each task (include name, how activity is done, and related activities)
-class Tasks{
-    constructor(name, taskComp, taskRela){
-        this.name = name
-        this.taskComp = taskComp
-        this.taskRela = taskRela
-    }
-    taskDone() {
-        //use DOM to cross out the task 
-        //But WHEN??
-        //when activity.activityCheck() is run
-    }
-}
-class Activities {
-    constructor(name, score){
-        this.name = name
-        this.score = score
-    }
-    activityCheck(){
-        
-        //highlight the task and use eventlistener and DOM to pick that activity
-        }
-    }
-}
 
-//instances of Tasks
-let goingToWork = new Tasks ("going to work", ["Walking","car","bicycle","public transportation"],["speed down car","speed up car"])
-let takeATrip = new Tasks ("take a trip", ["airplane","train"],[])
-let ReadingNews = new Tasks ("reading news", ["newspaper"],["recycling paper"])
-let watchingTv = new Tasks ("Watching tv", ["tv"],["unplug unused electrical devices"])
-let doingLaundry = new Tasks ("doing laundry", ["washing machine"],["airdrying cloth","dryer"])
-let cooking = new Tasks ("cooking", ["stove"],["animal based products","plant based products"])
-let coffeeWithAFriend = new Tasks ("coffee with a friend", ["coffee"],["bring reusable mug"])
+//user name
 
-tasks.push(goingToWork, takeATrip, ReadingNews, watchingTv, doingLaundry, cooking, coffeeWithAFriend)
-
-//instances of activities
-let walking = new Activities ("walking", 50)
-let car = new Activities ("car", -100)
-let bicycle = new Activities ("bicycle", 50)
-let publicTransportation = new Activities ("public transportation", 50)
-let airplane = new Activities ("airplane", -200)
-let train = new Activities ("train", -100)
-let newspaper = new Activities ("newspaper", -20)
-let tv = new Activities ("tv", -20)
-let washingMachine = new Activities ("washing machine", -20)
-let stove = new Activities ("stove", -20)
-let coffee = new Activities ("coffee", -20)
-let speedDownCar = new Activities ("speed down car", 50)
-let speedUpCar = new Activities ("stove", -20)
-let recyclingPaper = new Activities ("recycling paper",  50)
-let unplug = new Activities ("unplug unused electrical devices", 50)
-let airDryingCloth = new Activities ("air drying cloth", 50)
-let dryer = new Activities ("dryer", -50)
-let PlantBasedProducts = new Activities ("plant based products", 50)
-let AnimalBasedProducts = new Activities ("animal based products", -50)
-let bringReusableMug = new Activities ("bring reusable mug", 50)
-
+document.querySelector("form").addEventListener("submit",(e)=>{
+    e.preventDefault()
+    let name = document.querySelector("input[type='text']").value
+    userDisplay.innerText = `Hi ${name}!`
+    document.querySelector("input[type='text']").value = ""
+})
 
 ///How game start + game timing and background change
 
@@ -126,7 +163,8 @@ const game = {
 
     },
     end() {
-
+        
+        console.log("gameover")
         endDay. innerText= "Day ended! Get some sleep💤"
         document.getElementById("activity-submit").disabled = true 
         restartDay()
@@ -134,9 +172,7 @@ const game = {
     }
 }
 
-
-//FUNCTIONS/////////////////////////////////////////////////////////////////////////////
-// function: Background change functions
+// Background change functions
 const changeToNoon = function(){
     body.classList.remove("day")
     body.classList.add("noon")
@@ -155,8 +191,7 @@ const changeToDay = function(){
     body.classList.add ("day")
 }
 
-
-// function: create random number without repeatition
+//create random number without repeatition
 function getRandomNumber (min, max) {
     let step1 = max - min + 1
     let step2 = Math.random() * step1
@@ -172,7 +207,36 @@ function createNumberArray (a,b){
     return myArray
 }
 
-// function: create to-do list task
+//other eventListener & functions 
+
+//start game and game timer
+
+startButton.addEventListener ("click",() => {
+    game.start()
+    numbersArray = createNumberArray (0,6)
+})
+
+//counting the score of the day and create next task in to dolist
+activitySubmitButton.addEventListener("click", function(){
+    // score of day calculation
+    score = parseInt(myScore[0])
+    for (let n=1; n<myScore.length; n++){
+        score= score + myScore[n]
+        console.log(score)
+    }
+    scoreNumber.innerText = score
+    todayScore.append(scoreNumber)
+    //create next task
+    createTaskList()
+     
+})
+
+
+
+
+
+
+//create to-do list task
 const createTaskList = function (){ 
     //generate non repetitive random number
     if (numbersArray.length ==0){
@@ -185,16 +249,9 @@ const createTaskList = function (){
     //generate a list of the task (one current task) on hand
     
     toDoList=[tasks[Num].taskName]
-    // create the list of all task done on the day   
-    item = document.createElement("li")
-    item.innerText=`${toDoList[0]}`
-    item.classList.add("undone")
-    //append the list to document
-    toDoListMenu.appendChild(item)       
-}
-
-// function: generate an object containing all activities neede to complete the current task 
-const taskActivityMatch =function(){
+    
+    console.log(toDoList)
+    //generate an object containing all activities neede to complete the current task  
     for (let n=0; n<tasks.length; n++){
         if (tasks[n].taskName === toDoList[0]){
             acts = tasks[n].taskComplete
@@ -205,18 +262,28 @@ const taskActivityMatch =function(){
         if (tasks[n].taskName === toDoList[0]){
             actsRel = tasks[n].taskRelated
         }   
-    } 
-}
+    }
 
-// function: choosing related activities to task and append to today activity log
-    //The process of choosing an activity on left side, appending it to middle column
-    //+appending the activity's associated score to middle column
-const choosingActivity = function (e){
+       
+    console.log(acts)
+    // create the list of all task done on the day   
+    item = document.createElement("li")
+    item.innerText=`${toDoList[0]}`
+    item.classList.add("undone")
+    //append the list to document
+    toDoListMenu.appendChild(item)
+        
+    //choosing related activities to task and append to today activity log
     for (let i=0; i<activityItem.length; i++){
         
         activityItem[i].addEventListener("click", choosingActivity)
         
     }
+}
+
+//The process of choosing an activity on left side, appending it to middle column
+//+appending the activity's associated score to middle column
+const choosingActivity = function (e){
     let dailyActivity = document.createElement ("li")
     dailyActivity.innerText = e.target.innerText
     todayList.appendChild(dailyActivity)
@@ -235,9 +302,7 @@ const choosingActivity = function (e){
         e.target.removeEventListener("click", choosingActivity)
         e.target.classList.remove("chosen")
     }
-}
-// function: the process of checking each task as done if the right activities are chosen
-const checkkkkkk =function(){
+    //the process of checking each task as done if the right activities are chosen
     console.log(myScore)
     let myActivityStr = myActivity.toString()
     console.log (myActivityStr)
@@ -251,11 +316,15 @@ const checkkkkkk =function(){
         myActivity = [] 
     } else {
         console.log ("wrong choice!") 
-        myActivity = []   
+        myActivity = [] 
+       
     }    
 }
 
-// function: refresh the whole game (new day) + showing the previous day score and footprint above page
+
+
+
+// refresh the whole game (new day) + showing the previous day score and footprint above page
 
 const restartDay =function (){
     nextButton.addEventListener("click",function(){
@@ -333,43 +402,3 @@ const restartDay =function (){
     
     })
 }
-
-
-//EVENTLISTENER/////////////////////////////////////////////////////////////////////////////
-
-//user name
-document.querySelector("form").addEventListener("submit",(e)=>{
-    e.preventDefault()
-    let name = document.querySelector("input[type='text']").value
-    userDisplay.innerText = `Hi ${name}!`
-    document.querySelector("input[type='text']").value = ""
-})
-
-//start game and game timeR
-startButton.addEventListener ("click",() => {
-    game.start()
-    numbersArray = createNumberArray (0,6)
-})
-
-//counting the score of the day and create next task in to dolist
-activitySubmitButton.addEventListener("click", function(){
-    // score of day calculation
-    score = parseInt(myScore[0])
-    for (let n=1; n<myScore.length; n++){
-        score= score + myScore[n]
-        console.log(score)
-    }
-    scoreNumber.innerText = score
-    todayScore.append(scoreNumber)
-    //create next task
-    createTaskList()
-     
-})
-    
-
-    
-
-    
-    
-    
-    

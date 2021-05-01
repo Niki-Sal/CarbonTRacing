@@ -45,6 +45,13 @@ nav{
 #nav-title{
     padding:10px;
     padding-left: 20px;
+    text-align: center;
+}
+#nav-footer{
+    padding-top:3px;
+    padding-bottom:10px;
+    padding-left: 20px;
+    text-align: center;
 }
 
 /* container*/
